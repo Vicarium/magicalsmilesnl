@@ -1,0 +1,55 @@
+# Different local settings
+manage_local.py
+
+# Basics
+*.py[cod]
+*.pyc
+__pycache__
+
+# Logs
+*.log
+pip-log.txt
+
+# Unit test / coverage reports
+.coverage
+.tox
+nosetests.xml
+
+# Translations
+*.mo
+*.pot
+
+# Pycharm
+.idea
+
+# Vim
+
+*~
+*.swp
+*.swo
+
+# npm
+node_modules/
+
+# Compass
+.sass-cache
+
+# Pinax
+site_media/
+htmlcov
+.coverage
+node_modules/
+
+# virtual environment folder
+venv*
+venv
+
+# Databases
+db.sqlite3
+*.db
+
+# Folders
+media/
+
+# Server Files
+*.sock
