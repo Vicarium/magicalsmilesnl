@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load wagtailimages_tags %}
+
+<div class="container">
+{% block content %}
+
+
+  {% include "common/includes/intro.html" with intro=self.intro only %}
+
+	<br>
+	<div class="row">
+        {% if self.image %}
+        <div class="col-md-4">
+
+            {# Artist image - first store image as a variable in order to construct an image tag with a class applied #}
+            {% image self.image width-300 as photo %}
+            <img src="{{ photo.url }}" width="{{ photo.width }}" height="{{ photo.height }}" alt="{{ photo.alt }}" class="img-rounded" />
+
+        </div>
+        {% endif %}
+    {% if self.biography %}
+  	  <div class="col-md-8">
+
+  		  <h3>Artist Bio</h3>
+  		  <br>
+  	    {% include "common/includes/body.html" with body=self.biography only %}
+
+
+  		</div>
+    {% endif %}
+
+
+	</div>
+
+
+    {% include "artist/includes/contact.html" with contact=self only %}
+	<br>
+
+    {% include "common/includes/related_links.html" with related_links=self.related_links.all only %}
+{% endblock %}
+</div>

@@ -1,4 +1,6 @@
-{% load static wagtailuserbar %}
+{% load common_tags static cache compress wagtailuserbar %}
+{% load wagtailimages_tags static %}
+{% get_site_root as site_root %}
 
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
@@ -8,37 +10,165 @@
     <head>
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <title>
-            {% block title %}
-                {% if self.seo_title %}{{ self.seo_title }}{% else %}{{ self.title }}{% endif %}
-            {% endblock %}
-            {% block title_suffix %}
-                {% with self.get_site.site_name as site_name %}
-                    {% if site_name %}- {{ site_name }}{% endif %}
-                {% endwith %}
-            {% endblock %}
-        </title>
-        <meta name="description" content="" />
+        <title>{% block title %}{% if self.seo_title %}{{ self.seo_title }}{% else %}{{ self.title }}{% endif %}{% endblock %}{% block title_suffix %}{% endblock %}</title>
+        <meta name="description" content="{% if self.search_description %}{{ self.search_description }}{% endif %}">
+
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
+        {# External stylesheets #}
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" />
+
+
         {# Global stylesheets #}
-        <link rel="stylesheet" type="text/css" href="{% static 'css/magical.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-social.css' %}" />
+        <link rel="stylesheet" type="text/css" href="{% static 'css/magical.css' %}" />
+
+
+
+        {# Local static assets such as css, images and javascrpt should be stored at [yourapp]/static/[yourapp]/... #}
+        {% compress css %}
+            {# Custom stylesheets #}
+            {# SCSS compilation relies on django compressor #}
+            <link rel="stylesheet" type="text/x-scss" href="{% static "magical/css/main.scss" %}" />
+        {% endcompress %}
 
         {% block extra_css %}
             {# Override this in templates to add extra stylesheets #}
         {% endblock %}
-    </head>
 
-    <body class="{% block body_class %}{% endblock %}">
-        {% wagtailuserbar %}
+        {# Javascript that needs to be called from head e.g. google analytics snippet and bootstrap shivs #}
+        <script type="text/javascript">
+              var _gaq = _gaq || [];
+              _gaq.push(['_setAccount', 'UA-xxxxxxx-x']);
+              _gaq.push(['_trackPageview']);
 
-        {% block content %}{% endblock %}
+              (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+              })();
+        </script>
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+          <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+  	<style>
+      {% if site_root.title == "Summit Synchro" %}
+        .jumbotron {
+          background-color: transparent
+        }
+      {% else %}
+        .jumbotron {
+      		background: url({% static "images/image10.png" %}) no-repeat center center;
+      		background-size: cover;
+      		background-repeat:repeat;
+      	}
+      {% endif %}
+  	</style
+  </head>
 
-        {# Global javascript #}
-        <script type="text/javascript" src="{% static 'js/magical.js' %}"></script>
+  {# Override this block to set custom body classes on a template by template basis #}
+  <body class="{% block body_class %}{% endblock %}">
 
-        {% block extra_js %}
-            {# Override this in templates to add extra javascript #}
+    <div class="page-container">
+      {# A shortcut to page editing that appears when logged in #}
+      {% wagtailuserbar %}
+
+      <div class="site-header">
+
+        <div class="container hidden-xs">
+          <a href="/" class="logo">
+            <img src="media/images/magicalsmileslogo.original.png"
+             class="logo" alt="Home" style="margin-bottom: -136px; width:150px;"></img>
+          </a>
+
+          <div class="pull-right">
+            <form role="search" class="pull-left search" action="{% url 'search' %}" method="get">
+              <div class="input-group">
+                <input type="text" name="query" class="form-control" placeholder="Search?!" value="{{ search_query }}" />
+                <div class="input-group-btn">
+                    <button type="submit" class="btn btn-default">
+                        <i class="glyphicon glyphicon-search"></i>
+                    </button>
+                </div>
+              </div>
+            </form>
+            <a href="TODO" class="btn btn-social-icon btn-facebook" >
+              <i class="fa fa-facebook"></i>
+            </a>
+            <a href="TODO" class="btn btn-social-icon btn-twitter">
+              <i class="fa fa-twitter"></i>
+            </a>
+
+          </div>
+
+        </div>
+
+        {# Top bar #}
+        {% block menu %}
+            {% top_menu parent=site_root calling_page=self %}
         {% endblock %}
-    </body>
+
+      </div>
+
+      {# Page heading block #}
+      {% block heading %}
+        <div class="page-header header-container container">
+            <h1>{{ self.title }}</h1>
+        </div>
+      {% endblock %}
+
+      <div id="main-container" class="main container">
+
+        {% block content %}
+
+        {% endblock %}
+
+        {% include 'common/includes/prev_next.html' %}
+
+      </div>
+    </div>
+
+    {% block footer %}
+  		<footer id="footer">
+  			<div class="container" role="contentinfo">
+					<div class="pull-left">
+						<ul class="list-unstyled">
+                            <li>Derek James</li>
+                            <li>MagicalSmilesNL@gmail.com</li>
+						</ul>
+					</div>
+					<div class="pull-right">
+            <ul class="list-unstyled">
+                <li>©2017 MagicalSmilesNL</li>
+                <li><a href="/admin">Login</a><li>
+              </ul>
+          </div>
+  		  </div>
+  		</footer>
+    {% endblock %}
+
+    {# Global javascript #}
+    <script type="text/javascript" src="{% static 'js/magical.js' %}"></script>
+
+    {# External javascript #}
+    <script src="//code.jquery.com/jquery-2.1.3.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+    {% compress js %}
+        <script src="{% static "js/vendor/fluidvids.js" %}"></script>
+        {# Custom javascript #}
+        {# Local static assets such as css, images and javascrpt should be stored at [yourapp]/static/[yourapp]/... #}
+        <script src="{% static "magical/js/magical.js" %}"></script>
+    {% endcompress %}
+
+
+    {% block extra_js %}
+        {# Override this in templates to add extra javascript #}
+    {% endblock %}
+
+  </body>
 </html>

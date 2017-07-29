@@ -1,0 +1,50 @@
+<div class="page-header"><h3>Contact Information</h3></div>
+<div class="row">
+    <dl>
+      {% if contact.address_1 or contact.address_2 or contact.city or contact.country %}
+        <div class="col-sm-4">
+            {% if contact.address_1 %}
+                <dt>Address 1</dt>
+                <dd>{{ contact.address_1 }}</dd>
+            {% endif %}
+
+            {% if contact.address_2 %}
+                <dt>Address 2</dt>
+                <dd>{{ contact.address_2 }}</dd>
+            {% endif %}
+
+            {% if contact.city %}
+                <dt>City</dt>
+                <dd>{{ contact.city }}</dd>
+            {% endif %}
+
+            {% if contact.country %}
+                <dt>Country</dt>
+                <dd>{{ contact.country }}</dd>
+            {% endif %}
+		    </div>
+      {% endif %}
+  {% if contact.post_code or contact.telephone or contact.email %}
+            {% if contact.post_code %}
+            <div class="col-sm-4">
+                <dt>Post code</dt>
+                <dd>{{ contact.post_code }}</dd>
+            </div>
+            {% endif %}
+
+            {% if contact.telephone %}
+            <div class="col-sm-4">
+                <dt>Telephone</dt>
+                <dd>{{ contact.telephone }}</dd>
+            </div>
+            {% endif %}
+
+            {% if contact.email %}
+            <div class="col-sm-4">
+                <dt>Email</dt>
+                <dd>{{ contact.email }}</dd>
+            </div>
+            {% endif %}
+    {% endif %}
+  </dl>
+</div>

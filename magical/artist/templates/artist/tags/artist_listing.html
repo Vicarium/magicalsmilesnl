@@ -1,0 +1,10 @@
+{% if artists %}
+  <div class="panel panel-default">
+    <div class="panel-heading"><h3 class="panel-title">Artists</h3></div>
+    <div class="list-group">
+      {% for artist in artists %}
+        {% include "artist/includes/artist_list_item.html" %}
+      {% endfor %}
+    </div>
+  </div>
+{% endif %}

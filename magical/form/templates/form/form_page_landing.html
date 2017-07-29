@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags %}
+
+{% block left_content %}
+    {% include "common/includes/body.html" with body=self.thank_you_text only %}
+
+{% endblock %}

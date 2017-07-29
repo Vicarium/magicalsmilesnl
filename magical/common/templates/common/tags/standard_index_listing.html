@@ -1,0 +1,37 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+{% if pages %}
+    <div class="list-group">
+<div class="container">
+        {% for page in pages %}
+
+    <div class="card hovercard" style="float:left;">
+        {% with page.specific as fullpage %}
+            {% if fullpage.feed_image %}
+                {% image fullpage.feed_image fill-300x200-c50 %}
+            {% endif %}
+            <!-- <img src="http://placehold.it/300x200/000000/&text=Header" alt=""/> -->
+        {% endwith %}
+
+
+        <div class="info">
+            <br>
+            <div class="title">
+                {{ page.title }}
+            </div>
+            {% if page.search_description %}
+            <div class="desc">
+                {{ page.search_description }}
+            </div>
+            {% endif %}
+        </div>
+        {% comment %}
+        <div class="bottom">
+            <a class="btn btn-default" role="button" href="{% pageurl page %}">Learn More</a>
+        </div>
+        {% endcomment %}
+    </div>
+
+        {% endfor %}
+    </div>
+    </div>
+{% endif %}
