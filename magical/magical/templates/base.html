@@ -30,8 +30,7 @@
         {% compress css %}
             {# Custom stylesheets #}
             {# SCSS compilation relies on django compressor #}
-            <link rel="stylesheet" type="text/x-scss" href="{% static "magical/css/main.scss" %}" />
-        {% endcompress %}
+]        {% endcompress %}
 
         {% block extra_css %}
             {# Override this in templates to add extra stylesheets #}
@@ -159,10 +158,9 @@
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 
     {% compress js %}
-        <script src="{% static "js/vendor/fluidvids.js" %}"></script>
         {# Custom javascript #}
         {# Local static assets such as css, images and javascrpt should be stored at [yourapp]/static/[yourapp]/... #}
-        <script src="{% static "magical/js/magical.js" %}"></script>
+        <script src="{% static "/js/magical.js" %}"></script>
     {% endcompress %}
 
 

@@ -123,6 +123,7 @@ class StandardIndexPageRelatedLink(Orderable, RelatedLink):
 
 class StandardIndexPage(Page):
     intro = RichTextField(blank=True)
+    link_text = models.CharField(blank=True, null=False, max_length=32)
     feed_image = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -138,6 +139,7 @@ class StandardIndexPage(Page):
 StandardIndexPage.content_panels = [
     FieldPanel('title', classname="full title"),
     FieldPanel('intro', classname="full"),
+    FieldPanel('link_text', classname="full"),
     InlinePanel('related_links', label="Related links"),
 ]
 

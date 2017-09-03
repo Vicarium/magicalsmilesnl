@@ -86,8 +86,11 @@ def breadcrumbs(context):
 )
 def standard_index_listing(context, calling_page):
     pages = calling_page.get_children().live()
+    if calling_page.link_text:
+        link_text = calling_page.link_text
     return {
         'pages': pages,
+        'link_text': link_text,
         # required by the pageurl tag that we want to use within this template
         'request': context['request'],
     }

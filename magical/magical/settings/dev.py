@@ -12,6 +12,7 @@ SECRET_KEY = 'x0&8_mrx7qkn3i3e6sn)$&a$h#ashxpfgi8g-mkkwi18ad(m*k'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 
+
 try:
     from .local import *
 except ImportError:

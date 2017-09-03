@@ -25,6 +25,7 @@ BASE_DIR = os.path.dirname(PROJECT_DIR)
 ALLOWED_HOSTS = [
     '.magicalsmilesnl.ca',
     '127.0.0.1',
+    '*',
 ]
 
 
@@ -133,6 +134,7 @@ USE_TZ = True
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'compressor.finders.CompressorFinder',
 ]
 
 STATICFILES_DIRS = [
