@@ -18,23 +18,24 @@ EMAIL_USE_TLS = True
 # EMAIL_TIMEOUT is using default
 
 
-# Logging setup from django docs that outputs to console
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
     'handlers': {
-        'console': {
-            'class': 'logging.StreamHandler',
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': '/magicsmiles/magicalsmilesnl/debug.log',
         },
     },
     'loggers': {
         'django': {
-            'handlers': ['console'],
-            'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
+            'handlers': ['file'],
+            'level': 'DEBUG',
+            'propagate': True,
         },
     },
 }
-
 
 try:
     from .local import *

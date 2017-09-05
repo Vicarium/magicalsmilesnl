@@ -2,8 +2,12 @@
 
 {% block body_class %}template-404{% endblock %}
 
-{% block content %}
-    <h1>Page not found</h1>
+{% block heading %}
+  <div class="page-header header-container container">
+      <h1>404 Page not found</h1>
+  </div>
+{% endblock %}
 
-    <h2>Sorry, this page could not be found.</h2>
+{% block content %}
+    <h3>Sorry, this page doesn't seem to exist. If you believe you've reached this page in error please contact us at magicalsmilesnl+support@gmail.com</h3>
 {% endblock %}
